@@ -1,26 +1,28 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom mb-4">
-      <div class="container">
-        <a class="navbar-brand" href="#" @click.prevent="go('home')">MiTienda</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div id="nav" class="collapse navbar-collapse">
-          <ul class="navbar-nav me-auto">
-            <li class="nav-item"><a class="nav-link" href="#" @click.prevent="go('home')">Home</a></li>
-            <li class="nav-item">
-              <a class="nav-link" href="#" @click.prevent="go('cart')">Carrito ({{ cartCount }})</a>
-            </li>
-          </ul>
-          <div class="d-flex align-items-center gap-2">
-            <span v-if="state.user">Hola, {{ state.user.name || state.user.email }}</span>
-            <a v-if="!state.user" class="btn btn-outline-primary btn-sm" href="#" @click.prevent="go('login')">Iniciar sesión</a>
-            <button v-else class="btn btn-outline-secondary btn-sm" @click="logout">Cerrar sesión</button>
-          </div>
-        </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" href="#" @click.prevent="go('home')">TechGadget Store</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="nav" class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#" @click.prevent="go('home')">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" @click.prevent="go('cart')">Carrito ({{ cartCount }})</a>
+        </li>
+      </ul>
+      <div class="d-flex align-items-center gap-2 ms-auto">
+        <span v-if="state.user">Hola, {{ state.user.name || state.user.email }}</span>
+        <a v-if="!state.user" class="btn btn-outline-primary btn-sm" href="#" @click.prevent="go('login')">Iniciar sesión</a>
+        <button v-else class="btn btn-outline-secondary btn-sm" @click="logout">Cerrar sesión</button>
       </div>
-    </nav>
+    </div>
+  </div>
+</nav>
 
     <main class="container pb-5">
       <section v-if="state.view === 'home'">
