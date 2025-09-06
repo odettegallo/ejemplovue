@@ -16,6 +16,12 @@ export const state = reactive({
 })
 
 export const actions = {
+  checkout() {
+  // Aquí se podría simular un proceso de pago
+  alert('¡Compra realizada con éxito! ¡Gracias por tu pedido!')
+  actions.clearCart() // Vaciar el carrito después de la "compra"
+  actions.go('home') // Redirigir al usuario a la página de inicio
+},
   go(view) {
     state.view = view
   },
@@ -32,9 +38,26 @@ export const actions = {
     }
   },
   addToCart(product, qty = 1) {
+    // Busca si el producto ya está en el carrito
     const found = state.items.find(it => it.id === product.id)
-    if (found) found.qty += qty
-    else state.items.push({ ...product, qty })
+    
+    // Si el producto ya existe en el carrito
+    if (found) {
+      // Si la cantidad a agregar no sobrepasa el stock disponible
+      if (found.qty + qty <= product.stock) {
+        found.qty += qty
+      } else {
+        alert('No hay suficiente stock disponible para este producto.')
+      }
+    } else {
+      // Si la cantidad a agregar no sobrepasa el stock disponible
+      if (qty <= product.stock) {
+        state.items.push({ ...product, qty })
+      } else {
+        alert('No hay suficiente stock disponible para este producto.')
+      }
+    }
+    
     localStorage.setItem('cart', JSON.stringify(state.items))
   },
   removeFromCart(id) {
@@ -44,9 +67,14 @@ export const actions = {
   updateQty(id, qty) {
     const it = state.items.find(i => i.id === id)
     if (it) {
-      it.qty = qty
-      if (it.qty <= 0) actions.removeFromCart(id)
-      else localStorage.setItem('cart', JSON.stringify(state.items))
+      if (qty <= it.stock) {
+        it.qty = qty
+        if (it.qty <= 0) actions.removeFromCart(id)
+        else localStorage.setItem('cart', JSON.stringify(state.items))
+      } else {
+        it.qty = it.stock;
+        alert(`No puedes agregar más de ${it.stock} unidades de este producto.`)
+      }
     }
   },
   clearCart() {

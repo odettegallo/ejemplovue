@@ -30,7 +30,7 @@
       <div class="d-flex justify-content-end gap-2">
         <div class="fs-5 fw-semibold">Total: ${{ total.toLocaleString('es-CL') }}</div>
         <button class="btn btn-outline-secondary" @click="actions.clearCart()">Vaciar</button>
-        <button class="btn btn-success" disabled>Comprar</button>
+        <button class="btn btn-success" :disabled="state.items.length === 0" @click="actions.checkout()">Comprar</button>
       </div>
     </div>
   </div>
@@ -40,5 +40,7 @@
 import { computed } from 'vue'
 import { state, actions } from '../state'
 
-const total = computed(() => state.items.reduce((a, it) => a + it.price * it.qty, 0))
+const total = computed(() =>
+  state.items.reduce((sum, item) => sum + item.price * item.qty, 0)
+)
 </script>
