@@ -4,18 +4,15 @@
     <div class="card-body d-flex flex-column">
       <h2 class="h6 card-title">{{ product.name }}</h2>
       <p class="card-text mb-2">${{ product.price.toLocaleString('es-CL') }}</p>
+      <button class="btn btn-sm btn-outline-info mt-2" @click="showProductDetail">Ver detalles</button>
+      <div v-if="product.stock > 0" class="text-success">En stock: {{ product.stock }}</div>
+      <div v-else class="text-danger">Agotado</div>
       <div class="mt-auto d-flex align-items-center gap-2">
         <input v-model.number="qty" type="number" min="1" class="form-control" style="width: 90px" />
         <button class="btn btn-primary flex-grow-1" @click="add">Agregar</button>
       </div>
     </div>
-    <div v-show="product.stock === 0" class="card-body d-flex flex-column">
-      <h2 v-if="product.stock === 0" class="h6 card-title">Agotado</h2>
-      <p class="card-text mb-2">${{ product.price.toLocaleString('es-CL') }}</p>
-      <button class="btn btn-sm btn-outline-info mt-2" @click="showProductDetail">Ver detalles</button>
-    </div>
   </div>
-
 </template>
 
 <script setup>
@@ -35,4 +32,10 @@ function showProductDetail() {
 }
 </script>
 
-
+<style scoped>
+.card-img-top {
+  object-fit: contain;
+  height: 270px;
+  width: auto;
+}
+</style>
