@@ -29,6 +29,10 @@ function add() {
   actions.addToCart(props.product, qty.value)
   qty.value = 1
 }
+
+function showProductDetail() {
+  actions.showProductDetail(props.product)
+}
 </script>
 
 

@@ -24,6 +24,52 @@
   </div>
 </nav>
 
+
+  <div>
+    <div
+      class="modal fade"
+      id="productDetailModal"
+      tabindex="-1"
+      aria-labelledby="productDetailModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" v-if="state.selectedProduct">
+          <div class="modal-header">
+            <h5 class="modal-title" id="productDetailModalLabel">
+              {{ state.selectedProduct.name }}
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Cerrar"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <img
+              :src="state.selectedProduct.image"
+              class="img-fluid mb-3"
+              :alt="state.selectedProduct.name"
+            />
+            <p><strong>Precio:</strong> ${{ state.selectedProduct.price.toLocaleString('es-CL') }}</p>
+            <p><strong>Stock disponible:</strong> {{ state.selectedProduct.stock }}</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cerrar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
     <main class="container pb-5">
       <section v-if="state.view === 'home'">
         <h1 class="h4 mb-3">Productos</h1>

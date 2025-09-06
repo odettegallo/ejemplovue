@@ -12,6 +12,7 @@ export const state = reactive({
   view: 'home', // 'home' | 'cart' | 'login'
   authError: null,
   authLoading: false,
+  selectedProduct: null, // Propiedad para el producto seleccionado
 })
 
 export const actions = {
@@ -73,5 +74,13 @@ export const actions = {
     state.user = null
     localStorage.removeItem('user')
     state.view = 'home'
+  },
+  showProductDetail(product) {
+    state.selectedProduct = product
+    const modalElement = document.getElementById('productDetailModal')
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement)
+      modal.show()
+    }
   }
 }
