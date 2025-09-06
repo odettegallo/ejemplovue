@@ -1,6 +1,8 @@
 import { reactive } from 'vue'
 import * as Auth from './api/auth'
 import { fetchProducts } from './api/products'
+import { checkStockAndDecrement } from './api/stock'
+import { sendPurchaseNotification } from './api/email'
 
 export const state = reactive({
   user: JSON.parse(localStorage.getItem('user') || 'null'),
@@ -12,16 +14,10 @@ export const state = reactive({
   view: 'home', // 'home' | 'cart' | 'login'
   authError: null,
   authLoading: false,
-  selectedProduct: null, // Propiedad para el producto seleccionado
+  selectedProduct: null,
 })
 
 export const actions = {
-  checkout() {
-  // Aquí se podría simular un proceso de pago
-  alert('¡Compra realizada con éxito! ¡Gracias por tu pedido!')
-  actions.clearCart() // Vaciar el carrito después de la "compra"
-  actions.go('home') // Redirigir al usuario a la página de inicio
-},
   go(view) {
     state.view = view
   },
@@ -38,26 +34,20 @@ export const actions = {
     }
   },
   addToCart(product, qty = 1) {
-    // Busca si el producto ya está en el carrito
     const found = state.items.find(it => it.id === product.id)
-    
-    // Si el producto ya existe en el carrito
     if (found) {
-      // Si la cantidad a agregar no sobrepasa el stock disponible
       if (found.qty + qty <= product.stock) {
         found.qty += qty
       } else {
-        alert('No hay suficiente stock disponible para este producto.')
+        alert(`No puedes agregar más unidades. Hay ${product.stock} en stock y ya tienes ${found.qty} en el carrito.`)
       }
     } else {
-      // Si la cantidad a agregar no sobrepasa el stock disponible
       if (qty <= product.stock) {
         state.items.push({ ...product, qty })
       } else {
         alert('No hay suficiente stock disponible para este producto.')
       }
     }
-    
     localStorage.setItem('cart', JSON.stringify(state.items))
   },
   removeFromCart(id) {
@@ -72,7 +62,7 @@ export const actions = {
         if (it.qty <= 0) actions.removeFromCart(id)
         else localStorage.setItem('cart', JSON.stringify(state.items))
       } else {
-        it.qty = it.stock;
+        it.qty = it.stock
         alert(`No puedes agregar más de ${it.stock} unidades de este producto.`)
       }
     }
@@ -109,6 +99,28 @@ export const actions = {
     if (modalElement) {
       const modal = new bootstrap.Modal(modalElement)
       modal.show()
+    }
+  },
+
+  // Nueva acción asíncrona para simular la compra
+  async checkout() {
+    state.loadingProducts = true
+    try {
+      alert('¡Compra realizada con éxito!')
+
+      // Se simula la verificación y el descuento de stock en el "servidor"
+      await checkStockAndDecrement(state.items)
+      
+      // Se simula la notificación por correo
+      await sendPurchaseNotification(state.items)
+
+      alert('¡Gracias por tu pedido!')
+      actions.clearCart() // Vaciar el carrito después de la "compra"
+      actions.go('home') // Redirigir al usuario
+    } catch (error) {
+      alert(`Error en la compra: ${error.message}`)
+    } finally {
+      state.loadingProducts = false
     }
   }
 }
