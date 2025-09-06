@@ -32,4 +32,10 @@ function showProductDetail() {
 }
 </script>
 
-
+<style scoped>
+.card-img-top {
+  object-fit: contain;
+  height: 270px;
+  width: auto;
+}
+</style>
