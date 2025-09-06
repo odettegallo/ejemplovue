@@ -9,7 +9,13 @@
         <button class="btn btn-primary flex-grow-1" @click="add">Agregar</button>
       </div>
     </div>
+    <div v-show="product.stock === 0" class="card-body d-flex flex-column">
+      <h2 v-if="product.stock === 0" class="h6 card-title">Agotado</h2>
+      <p class="card-text mb-2">${{ product.price.toLocaleString('es-CL') }}</p>
+      <button class="btn btn-sm btn-outline-info mt-2" @click="showProductDetail">Ver detalles</button>
+    </div>
   </div>
+
 </template>
 
 <script setup>

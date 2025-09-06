@@ -18,6 +18,6 @@ import ProductCard from './ProductCard.vue'
 onMounted(() => actions.loadProducts())
 
 const filtered = computed(() =>
-  state.products.filter(p => p.name.toLowerCase().includes(state.search.toLowerCase()))
+  state.products.filter(p => p.stock > 0 && p.name.toLowerCase().includes(state.search.toLowerCase()))
 )
 </script>
