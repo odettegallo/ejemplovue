@@ -106,7 +106,7 @@ export const actions = {
   async checkout() {
     state.loadingProducts = true
     try {
-      alert('¡Compra realizada con éxito!')
+      alert('Estamos procesando tu compra...')
 
       // Se simula la verificación y el descuento de stock en el "servidor"
       await checkStockAndDecrement(state.items)
@@ -114,7 +114,7 @@ export const actions = {
       // Se simula la notificación por correo
       await sendPurchaseNotification(state.items)
 
-      alert('¡Gracias por tu pedido!')
+      alert('¡Compra realizada con éxito!,¡Gracias por tu pedido!')
       actions.clearCart() // Vaciar el carrito después de la "compra"
       actions.go('home') // Redirigir al usuario
     } catch (error) {
