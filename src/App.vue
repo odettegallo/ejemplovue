@@ -11,12 +11,18 @@
         </button>
       </div>
     </nav>
-
+ <header class="hero bg-primary text-white text-center py-5">
+      <div class="container">
+        <h1 class="hero__title">Bienvenido a TechGadget Store</h1>
+        <p class="hero__subtitle">
+          Inicia sesión para acceder a lo último en tecnología con los mejores precios.
+        </p>
+      </div>
+    </header>
     <div class="container my-5">
       <div class="row justify-content-center">
         <div class="col-lg-6">
           <div class="card p-4">
-            <h2 class="text-center mb-4 text-primary">Autenticación</h2>
             <div id="alertContainer" class="mb-3">
               <div v-if="alertMessage" :class="alertClass" role="alert">
                 {{ alertMessage }}
