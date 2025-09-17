@@ -1,5 +1,5 @@
 import { reactive } from 'vue'
-import * as Auth from './api/auth'
+import * as Auth from './api/authService'
 import { fetchProducts } from './api/products'
 import { checkStockAndDecrement } from './api/stock'
 import { sendPurchaseNotification } from './api/email'

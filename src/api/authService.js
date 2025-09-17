@@ -1,6 +1,6 @@
 // Funciones de validación
 export function validateEmail(email) {
-  const regex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return regex.test(email);
 }
 
@@ -13,7 +13,7 @@ export function initializeTestUsers() {
   const users = JSON.parse(localStorage.getItem('usuarios')) || [];
   if (users.length === 0) {
     const testUsers = [
-      { id: 1, name: '', lastName: '', email: 'usuario1@mitienda.com', password: 'password' },
+      { id: 1, name: 'Usuario', lastName: 'Tienda', email: 'usuario1@mitienda.com', password: 'password' },
       { id: 2, name: 'María', lastName: 'López', email: 'maria@ejemplo.com', password: '123456' }
     ];
     localStorage.setItem('usuarios', JSON.stringify(testUsers));

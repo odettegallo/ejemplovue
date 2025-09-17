@@ -27,7 +27,7 @@
 
 <script>
 import { ref } from 'vue';
-import { login, validateEmail } from '../api/authService';
+import { login, validateEmail, validatePassword } from '../api/authService';
 
 export default {
   emits: ['login-success', 'alert'],
@@ -40,6 +40,10 @@ export default {
         emit('alert', { message: 'Por favor, ingresa un email válido.', type: 'danger' });
         return;
       }
+        if (!validatePassword(password.value)) {
+            emit('alert', { message: 'La contraseña debe tener al menos 6 caracteres.', type: 'danger' });
+            return;
+        }
       const user = login(email.value, password.value);
       if (user) {
         emit('login-success');
